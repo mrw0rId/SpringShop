@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -12,7 +12,7 @@
 	<artifactId>shop-ui</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>shop-ui</name>
-	<description>Shop UI module</description>
+	<description>Module for eshop customer UI</description>
 
 	<dependencies>
 		<dependency>
@@ -29,16 +29,29 @@
 		</dependency>
 
 		<dependency>
+			<groupId>ru.geekbrains</groupId>
+			<artifactId>shop-picture-service</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ru.geekbrains</groupId>
+			<artifactId>shop-database</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>ru.geekbrains</groupId>
-			<artifactId>shop-db</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
