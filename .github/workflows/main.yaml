@@ -37,7 +37,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: ${{ github.actor }}
           password: ${{ github.token }}
 
       - name: Build shop-ui with Docker
@@ -45,7 +45,7 @@ jobs:
         with:
           push: true
           context: shop-ui
-          tags: ghcr.io/${{ github.repository_owner }}/shop-ui:latest
+          tags: ghcr.io/${{ github.actor }}/shop-ui:latest
           build-args: |
             JAR_FILE=shop-ui-${{ steps.mvn_build.outputs.shop_ui_artefact_version }}.jar
       - name: Build shop-admin-ui with Docker
@@ -53,6 +53,6 @@ jobs:
         with:
           push: true
           context: shop-admin-ui
-          tags: ghcr.io/${{ github.repository_owner }}/shop-admin-ui:latest
+          tags: ghcr.io/${{ github.actor }}/shop-admin-ui:latest
           build-args: |
             JAR_FILE=shop-admin-ui-${{ steps.mvn_build.outputs.shop_admin_ui_artefact_version }}.jar
