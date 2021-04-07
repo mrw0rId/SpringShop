@@ -8,7 +8,7 @@ services:
       - "80:80"
 
   shop-ui:
-    image: ghcr.io/mrw0rId/shop-ui:latest
+    image: ghcr.io/$(Build.Repository.Name.Lowercase):$(Build.BuildId.Lowercase)/shop-ui:latest
     restart: always
     ports:
       - "8080"
@@ -17,7 +17,7 @@ services:
     command: bash -c "/apps/wait-for-mysql.sh db && /apps/entrypoint.sh"
 
   shop-admin-ui:
-    image: ghcr.io/mrw0rId/shop-admin-ui:latest
+    image: ghcr.io/$(Build.Repository.Name.Lowercase):$(Build.BuildId.Lowercase)/shop-admin-ui:latest
     restart: always
     ports:
       - "8080"
