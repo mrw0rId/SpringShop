@@ -9,7 +9,7 @@ public interface PictureService {
 
     Optional<String> getPictureContentTypeById(long id);
 
-    Optional<byte[]> getPictureDataById(long id);
+    Optional<PictureData> getPictureDataById(long id);
 
     PictureData createPictureData(byte[] picture, String filename);
 

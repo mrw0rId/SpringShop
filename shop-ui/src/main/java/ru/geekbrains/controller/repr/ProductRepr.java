@@ -24,22 +24,25 @@ public class ProductRepr implements Serializable {
 
     private Brand brand;
 
-    private List<PictureRepr> pictures;
+    private final Long pictureId;
 
-    private MultipartFile[] newPictures;
+    private final List<Long> pictureIds;
 
-    public ProductRepr() {
+    public ProductRepr(Long id, String name, BigDecimal price,Brand brand, Long pictureId, List<Long> pictureIds) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.brand = brand;
+        this.pictureId = pictureId;
+        this.pictureIds = pictureIds;
     }
 
-    public ProductRepr(Product product) {
-        this.id = product.getId();
-        this.name = product.getName();
-        this.price = product.getPrice();
-        this.category = product.getCategory();
-        this.brand = product.getBrand();
-        this.pictures = product.getPictures().stream()
-                .map(PictureRepr::new)
-                .collect(Collectors.toList());
+    public Long getPictureId() {
+        return pictureId;
+    }
+
+    public List<Long> getPictureIds() {
+        return pictureIds;
     }
 
     public Long getId() {
@@ -80,22 +83,6 @@ public class ProductRepr implements Serializable {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
-    }
-
-    public List<PictureRepr> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<PictureRepr> pictures) {
-        this.pictures = pictures;
-    }
-
-    public MultipartFile[] getNewPictures() {
-        return newPictures;
-    }
-
-    public void setNewPictures(MultipartFile[] newPictures) {
-        this.newPictures = newPictures;
     }
 
     @Override

@@ -2731,7 +2731,6 @@ i:before {
 .l_product_item {
   border: 1px solid #cccccc;
   margin-bottom: 30px;
-
 }
 
 .l_product_item .l_p_img {
@@ -2740,11 +2739,13 @@ i:before {
   width: 267.98px;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .l_product_item .l_p_img img {
   max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
 }
 
 .l_product_item .l_p_text {
@@ -3529,40 +3530,40 @@ i:before {
   margin-top: 22px;
 }
 
-.p_color .color_list li {
-  display: inline-block;
+.p_color .color_list option {
+  /*display: inline-block;*/
   margin-right: 10px;
 }
 
-.p_color .color_list li a {
+.p_color .color_list option {
   height: 28px;
   width: 28px;
   border-radius: 50%;
   background: #1cbbb4;
-  display: inline-block;
+  /*display: inline-block;*/
 }
 
-.p_color .color_list li:nth-child(2) a {
+.p_color .color_list option:nth-child(2) {
   background: #000000;
 }
 
-.p_color .color_list li:nth-child(3) a {
+.p_color .color_list option:nth-child(3) {
   background: #00aeef;
 }
 
-.p_color .color_list li:nth-child(4) a {
+.p_color .color_list option:nth-child(4) {
   background: #00a99d;
 }
 
-.p_color .color_list li:nth-child(5) a {
+.p_color .color_list option:nth-child(5) {
   background: #e7352b;
 }
 
-.p_color .color_list li:last-child {
+.p_color .color_list option:last-child {
   margin-right: 0px;
 }
 
-.p_color .color_list li:last-child a {
+.p_color .color_list option:last-child {
   background: #fbf4d9;
 }
 

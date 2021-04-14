@@ -55,15 +55,22 @@
                                 <div class="l_product_item">
                                     <div class="l_p_img">
                                         <a th:href="@{/{id}(id = ${product.id})}">
-                                            <img th:src="@{/picture/{pictureId}(pictureId=${product.getPictures().get(0).getId()})}"
-                                                alt="Image">
+                                            <img th:src="@{/picture/{pictureId}(pictureId=${product.getPictureId()})}"
+                                                 alt="Image">
                                         </a>
                                         <h5 class="new">New</h5>
                                     </div>
                                     <div class="l_p_text">
                                         <ul>
-                                            <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                            <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
+                                            <li class="p_icon"><a th:href="@{/{id}(id = ${product.id})}"><i
+                                                    class="icon_piechart"></i></a></li>
+                                            <li>
+                                                <form th:method="post" th:action="@{/cart}">
+                                                    <input type="hidden" name="productId" th:value="${product.id}">
+                                                    <input type="hidden" name="qty" th:value="1">
+                                                    <button type="submit" class="add_cart_btn">Add to cart</button>
+                                                </form>
+                                            </li>
                                             <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
                                         </ul>
                                         <h4 th:text="${product.getName()}">Travel Bags</h4>
@@ -74,14 +81,39 @@
                         </div>
                         <nav aria-label="Page navigation example" class="pagination_area">
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                <li class="page-item next"><a class="page-link" href="#"><i class="fa fa-angle-right"
-                                                                                            aria-hidden="true"></i></a>
+                                <li class="page-item previous" th:if="${(products.number) > 0}">
+                                    <a th:href="@{/(page=${products.number}, size=${products.size})}"
+                                       class="page-link">
+                                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+
+                                <li th:if="${(products.number) > 0}"
+                                    class="page-item">
+                                    <a th:text="${products.number}"
+                                       th:href="@{/(page=${products.number}, size=${products.size})}"
+                                       class="page-link">1</a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a th:text="${products.number + 1}"
+                                       th:href="@{/(page=${products.number + 1}, size=${products.size})}"
+                                       class="page-link">(current)</a>
+                                </li>
+
+                                <li th:if="${(products.number + 1) <= products.totalPages - 1}"
+                                    class="page-item">
+                                    <a th:text="${products.number + 2}"
+                                       th:href="@{/(page=${products.number + 2}, size=${products.size})}"
+                                       class="page-link">3</a>
+                                </li>
+
+                                <li th:if="${(products.number + 1) < products.totalPages}"
+                                    class="page-item next">
+                                    <a th:href="@{/(page=${products.number + 2}, size=${products.size})}"
+                                       class="page-link">
+                                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                    </a>
                                 </li>
                             </ul>
                         </nav>
@@ -96,58 +128,9 @@
                             <div class="l_w_title">
                                 <h3>Categories</h3>
                             </div>
-                            <ul class="navbar-nav">
+                            <ul class="navbar-nav" th:each="cat : ${categories}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Men’s Fashion
-                                        <i class="icon_plus" aria-hidden="true"></i>
-                                        <i class="icon_minus-06" aria-hidden="true"></i>
-                                    </a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Women’s Fashion
-                                        <i class="icon_plus" aria-hidden="true"></i>
-                                        <i class="icon_minus-06" aria-hidden="true"></i>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item"><a class="nav-link" href="#">Hoodies & Sweatshirts</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Jackets & Coats</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Blouses & Shirts</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Phone & Accessories
-                                        <i class="icon_plus" aria-hidden="true"></i>
-                                        <i class="icon_minus-06" aria-hidden="true"></i>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Electronic Appliance
-                                        <i class="icon_plus" aria-hidden="true"></i>
-                                        <i class="icon_minus-06" aria-hidden="true"></i>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" href="#">Computer & Networking
-                                        <i class="icon_plus" aria-hidden="true"></i>
-                                        <i class="icon_minus-06" aria-hidden="true"></i>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" href="#">TV, Audiio & Gaming
-                                        <i class="icon_plus" aria-hidden="true"></i>
-                                        <i class="icon_minus-06" aria-hidden="true"></i>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" href="#">Office Supplies
-                                        <i class="icon_plus" aria-hidden="true"></i>
-                                        <i class="icon_minus-06" aria-hidden="true"></i>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" href="#">All Categories
+                                    <a class="nav-link" th:href="@{/(categoryId = ${cat.getId()})}">[[${cat.name}]]
                                         <i class="icon_plus" aria-hidden="true"></i>
                                         <i class="icon_minus-06" aria-hidden="true"></i>
                                     </a>
