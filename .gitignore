@@ -19,6 +19,7 @@ target/
 *.iml
 *.ipr
 !/.idea/runConfigurations
+.DS_Store
 
 ### NetBeans ###
 /nbproject/private/
