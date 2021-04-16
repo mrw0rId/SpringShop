@@ -37,10 +37,7 @@ public class ProductServiceImpl implements ProductService, Serializable {
     @Override
     @Transactional
     public List<ProductRepr> findAll() {
-//        return productRepository.findAllWithPictureFetch().stream()
-//                .map(ProductRepr::new)
-//                .collect(Collectors.toList());
-        return productRepository.findAll().stream()
+        return productRepository.findAllWithPictureFetch().stream()
                 .map(ProductRepr::new)
                 .collect(Collectors.toList());
     }

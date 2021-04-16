@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.geekbrains.controllers.error.NotFoundException;
 import ru.geekbrains.persist.model.Product;
 import ru.geekbrains.service.PictureService;
 
@@ -35,7 +36,7 @@ public class PictureController {
         Optional<String> opt = pictureService.getPictureContentTypeById(pictureId);
         if (opt.isPresent()) {
             resp.setContentType(opt.get());
-            resp.getOutputStream().write(pictureService.getPictureDataById(pictureId).get());
+            resp.getOutputStream().write(pictureService.getPictureDataById(pictureId).orElseThrow(NotFoundException::new).getData());
         } else {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }

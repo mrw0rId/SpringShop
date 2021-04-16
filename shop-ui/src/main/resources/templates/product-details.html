@@ -22,15 +22,15 @@
             <div class="col-lg-4">
                 <div class="product_details_slider">
                     <div id="product_slider" class="rev_slider" data-version="5.3.1.6">
-                        <ul >    <!-- SLIDE  -->
+                        <ul>    <!-- SLIDE  -->
                             <li th:each="picture : ${pictures}">
-                                <ul >
+                                <ul>
                                     <li th:each="picture2 : ${pictures2}"
                                         data-index="rs-137221490" data-transition="scaledownfrombottom"
                                         data-slotamount="7"
                                         data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut"
                                         data-masterspeed="1500"
-                                        th:attr="data-thumb=@{/picture/{pictureId}(pictureId=${picture2.getId()})}"
+                                        th:attr="data-thumb=@{/picture/{pictureId}(pictureId=${picture2})}"
                                         data-rotate="0"
                                         data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7"
                                         data-saveperformance="off" data-title="Ishtar X Tussilago"
@@ -39,8 +39,8 @@
                                 </ul>
 
                                 <!-- MAIN IMAGE -->
-                                <img th:src="@{/picture/{pictureId}(pictureId=${picture.getId()})}" alt=""
-                                     data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
+                                <img th:src="@{/picture/{pictureId}(pictureId=${picture})}" alt=""
+                                     data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat"
                                      data-bgparallax="5" class="rev-slidebg" data-no-retina>
                                 <!-- LAYERS -->
                             </li>
@@ -67,36 +67,40 @@
                     <h4 th:text="'$' + ${product.getPrice()}">$45.05</h4>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum eligendi iure porro praesentium rem
                         sit.</p>
-                    <div class="p_color">
-                        <h4 class="p_d_title">color <span>*</span></h4>
-                        <ul class="color_list">
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                        </ul>
-                    </div>
-                    <div class="p_color">
-                        <h4 class="p_d_title">size <span>*</span></h4>
-                        <select class="selectpicker">
-                            <option>Select your size</option>
-                            <option>Select your size M</option>
-                            <option>Select your size XL</option>
-                        </select>
-                    </div>
-                    <div class="quantity">
+                    <form class="quantity" th:method="post" th:action="@{/cart(productId = ${product.getId()})}">
+                        <div class="p_color">
+                            <h4 class="p_d_title">color <span>*</span></h4>
+                            <select class="color_list" id="color" th:name="color" required>
+                                <option th:value="emerald">emerald</option>
+                                <option th:value="balck">balck</option>
+                                <option th:value="blue">blue</option>
+                                <option th:value="green">green</option>
+                                <option th:value="red">red</option>
+                                <option th:value="rose">rose</option>
+                            </select>
+                        </div>
+                        <div class="p_color">
+                            <h4 class="p_d_title">size <span>*</span></h4>
+                            <select class="selectpicker" th:name="size">
+                                <option>Select your size</option>
+                                <option th:value="S">S</option>
+                                <option th:value="M">M</option>
+                                <option th:value="L">L</option>
+                                <option th:value="XL">XL</option>
+                            </select>
+                        </div>
+
+<!--                        <input type="hidden" name="productId" th:value="${product.id}">-->
                         <div class="custom">
                             <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
                                     class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
-                            <input type="text" name="qty" id="sst" maxlength="12" value="01" title="Quantity:"
+                            <input type="text" name="qty" id="sst" maxlength="12" th:name="qty" th:value="1" title="Quantity:"
                                    class="input-text qty">
                             <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
                                     class="increase items-count" type="button"><i class="icon_plus"></i></button>
                         </div>
-                        <a class="add_cart_btn" href="#">add to cart</a>
-                    </div>
+                        <button type="submit" class="add_cart_btn">add to cart</button>
+                    </form>
                     <div class="shareing_icon">
                         <h5>share :</h5>
                         <ul>
