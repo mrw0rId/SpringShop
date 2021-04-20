@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService, Serializable {
         return new ProductRepr(
                 p.getId(),
                 p.getName(), p.getPrice(),
-                p.getBrand(),
+                p.getBrand().getName(),
                 p.getPictures().size() > 0 ? p.getPictures().get(0).getId() : null,
                 p.getPictures().stream().map(Picture::getId).collect(Collectors.toList())
         );
