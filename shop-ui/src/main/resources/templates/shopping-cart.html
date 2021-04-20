@@ -30,7 +30,6 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             <tr th:each="line : ${lineItems}">
                                 <th scope="row">
                                     <form th:action="@{/cart(productId = ${line.getProductId()}, color = ${line.getColor()},
@@ -61,7 +60,6 @@
                                 </td>
                                 <td><p>[[${line.total}]]</p></td>
                             </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -112,8 +110,10 @@
                                 <li><a href="#"><span>Totals</span>[[${total}]]</a></li>
                             </ul>
                         </div>
-                        <button type="submit" class="btn btn-primary update_btn">update cart</button>
-                        <button type="submit" class="btn btn-primary checkout_btn">proceed to checkout</button>
+                        <div style="display: flex; flex-direction: column; justify-content: center">
+                            <button type="submit" class="btn btn-primary update_btn">update cart</button>
+                            <button style="margin: 0" type="submit" class="btn btn-primary checkout_btn">proceed to checkout</button>
+                        </div>
                     </div>
                 </div>
             </div>
