@@ -1,16 +1,11 @@
 package ru.geekbrains.controller.repr;
 
-import org.springframework.web.multipart.MultipartFile;
-import ru.geekbrains.controllers.repr.PictureRepr;
 import ru.geekbrains.persist.model.Brand;
-import ru.geekbrains.persist.model.Category;
-import ru.geekbrains.persist.model.Product;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class ProductRepr implements Serializable {
 
@@ -20,15 +15,16 @@ public class ProductRepr implements Serializable {
 
     private BigDecimal price;
 
-    private Category category;
+    private String brand;
 
-    private Brand brand;
+    private Long pictureId;
 
-    private final Long pictureId;
+    private List<Long> pictureIds;
 
-    private final List<Long> pictureIds;
+    public ProductRepr() {
+    }
 
-    public ProductRepr(Long id, String name, BigDecimal price,Brand brand, Long pictureId, List<Long> pictureIds) {
+    public ProductRepr(Long id, String name, BigDecimal price, String brand, Long pictureId, List<Long> pictureIds) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -69,19 +65,11 @@ public class ProductRepr implements Serializable {
         this.price = price;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Brand getBrand() {
+    public String getBrand() {
         return brand;
     }
 
-    public void setBrand(Brand brand) {
+    public void setBrand(String brand) {
         this.brand = brand;
     }
 

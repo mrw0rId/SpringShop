@@ -19,6 +19,7 @@ public final class ProductSpecification {
         return (root, query, builder) -> {
             if (query.getResultType() != Long.class && query.getResultType() != long.class) {
                 root.fetch("pictures", JoinType.LEFT);
+                root.fetch("brand", JoinType.LEFT);
                 query.distinct(true);
             }
             query.distinct(true);

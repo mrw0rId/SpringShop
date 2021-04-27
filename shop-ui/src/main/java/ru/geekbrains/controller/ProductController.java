@@ -52,14 +52,6 @@ public class ProductController {
             products = productService.findByFilter(categoryId, page.orElse(1) - 1, pageSize.orElse(9));
         }
 
-//        List<ProductRepr> products;
-//        if (categoryId == null) {
-//            products = productService.findByFilter(null, page.orElse(1) - 1, pageSize.orElse(9));
-//        } else if (categoryId == 8) {
-//            products = productService.findByFilter(null, page.orElse(1) - 1, pageSize.orElse(9));
-//        } else {
-//            products = productService.findByFilter(categoryId, page.orElse(1) - 1, pageSize.orElse(9));
-//        }
         model.addAttribute("products", products);
         model.addAttribute("categories", categoryRepository.findAll());
 

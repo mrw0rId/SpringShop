@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -50,25 +51,28 @@ public class ProductServiceImpl implements ProductService, Serializable {
 
     @Override
     public Page<ProductRepr> findByFilter(Long categoryId, Integer page, Integer pageSize) {
-        Specification<Product> spec = ProductSpecification.fetchPictures();
-        Page <ProductRepr> products;
+        Specification<Product> spec = Specification.where(null); // = ProductSpecification.fetchPictures();
 
         if (categoryId != null) {
             spec = spec.and(ProductSpecification.byCategory(categoryId));
         }
-        products = productRepository
-                .findAll(spec, PageRequest.of(page,pageSize))
-                .map(ProductServiceImpl::mapToRepr);
+        Page<Long> ids = productRepository
+                .findAll(spec, PageRequest.of(page, pageSize))
+                .map(Product::getId);
 
-        return products;
+        List<ProductRepr> allByIds = productRepository.findAllByIds(ids.getContent())
+                .stream()
+                .map(ProductServiceImpl::mapToRepr)
+                .collect(Collectors.toList());
 
+        return new PageImpl<>(allByIds, PageRequest.of(page, pageSize), ids.getTotalElements());
     }
 
     private static ProductRepr mapToRepr(Product p) {
         return new ProductRepr(
                 p.getId(),
                 p.getName(), p.getPrice(),
-                p.getBrand(),
+                p.getBrand().getName(),
                 p.getPictures().size() > 0 ? p.getPictures().get(0).getId() : null,
                 p.getPictures().stream().map(Picture::getId).collect(Collectors.toList())
         );

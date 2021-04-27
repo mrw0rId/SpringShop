@@ -2741,6 +2741,10 @@ i:before {
   justify-content: center;
 }
 
+.l_product_item .l_p_img a {
+  display: contents;
+}
+
 .l_product_item .l_p_img img {
   max-width: 100%;
   max-height: 100%;

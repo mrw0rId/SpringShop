@@ -63,7 +63,7 @@ public class CartController {
                             @RequestParam(value = "color") String color,
                             @RequestParam(value = "size") String size,
                             @RequestParam(value = "qty") Integer qty,
-                            Model model){
+                            Model model) {
         logger.info("Adjusting product quantity in cart");
         ProductRepr productRepr = productService.findById(id)
                 .orElseThrow(NotFoundException::new);
