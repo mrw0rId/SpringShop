@@ -88,17 +88,25 @@
                                     </a>
                                 </li>
 
-                                <li th:if="${(products.number) > 0}"
+                                <li th:if="${(products.number) > 0} AND ${products.hasContent()}"
                                     class="page-item">
                                     <a th:text="${products.number}"
                                        th:href="@{/(page=${products.number}, size=${products.size})}"
                                        class="page-link">1</a>
                                 </li>
 
-                                <li class="page-item">
+                                <li th:if="${products.hasContent()}"
+                                    class="page-item">
                                     <a th:text="${products.number + 1}"
                                        th:href="@{/(page=${products.number + 1}, size=${products.size})}"
                                        class="page-link">(current)</a>
+                                </li>
+
+                                <li th:unless="${products.hasContent()}"
+                                    class="page-item">
+                                    <a th:text="back"
+                                       th:href="@{/}"
+                                       class="page-link"></a>
                                 </li>
 
                                 <li th:if="${(products.number + 1) <= products.totalPages - 1}"

@@ -12,16 +12,21 @@
     <div th:replace="fragments/sidebar :: sidebar"></div>
 
     <div class="content p-4">
-        <h2 class="mb-4" th:if="${edit}" >Edit role</h2>
-        <h2 class="mb-4" th:if="${create}" >Create role</h2>
+        <h2 class="mb-4" th:if="${edit}" >Edit color</h2>
+        <h2 class="mb-4" th:if="${create}" >Create color</h2>
 
-        <form th:object="${role}" method="post" th:action="@{/role}">
+        <form th:object="${color}" method="post" th:action="@{/color}">
             <div class="card mb-4">
                 <div class="card-body">
                     <input th:type="hidden" th:field="*{id}">
                     <div class="form-group">
-                        <label for="name">Role</label>
-                        <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="Enter role like: ROLE_<rolename>" required>
+                        <label for="name">Color name</label>
+                        <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="Enter color name" required>
+                    </div>
+                    <div>
+                        <label for="color">Color</label>
+                        <input type="color" id="color" name="color"
+                               value="#000000" th:field="*{color}">
                     </div>
                 </div>
                 <div class="card-footer bg-white">
