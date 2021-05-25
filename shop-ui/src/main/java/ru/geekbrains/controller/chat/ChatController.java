@@ -30,9 +30,6 @@ public class ChatController {
             logger.error("No user to send message");
             return;
         }
-//        template.convertAndSendToUser(headerAccessor.getUser().getName(), "/chat_out/receive_message",
-//                new ChatMessage("Server", "Answer to: " + chatMessage.getMessage()),
-//                createHeaders(headerAccessor.getSessionId()));
         template.convertAndSend("/chat_out/receive_message",
                 new ChatMessage(chatMessage.getUsername(),  chatMessage.getMessage()));
     }
