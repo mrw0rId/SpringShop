@@ -3,12 +3,14 @@ package ru.geekbrains.controllers.repr;
 import org.springframework.web.multipart.MultipartFile;
 import ru.geekbrains.persist.model.Brand;
 import ru.geekbrains.persist.model.Category;
+import ru.geekbrains.persist.model.Colors;
 import ru.geekbrains.persist.model.Product;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProductRepr implements Serializable {
@@ -27,6 +29,8 @@ public class ProductRepr implements Serializable {
 
     private MultipartFile[] newPictures;
 
+    private Set<Colors> colors;
+
     public ProductRepr() {
     }
 
@@ -39,6 +43,7 @@ public class ProductRepr implements Serializable {
         this.pictures = product.getPictures().stream()
                 .map(PictureRepr::new)
                 .collect(Collectors.toList());
+        this.colors = product.getColors();
     }
 
     public Long getId() {
@@ -95,6 +100,14 @@ public class ProductRepr implements Serializable {
 
     public void setNewPictures(MultipartFile[] newPictures) {
         this.newPictures = newPictures;
+    }
+
+    public Set<Colors> getColors() {
+        return colors;
+    }
+
+    public void setColors(Set<Colors> colors) {
+        this.colors = colors;
     }
 
     @Override

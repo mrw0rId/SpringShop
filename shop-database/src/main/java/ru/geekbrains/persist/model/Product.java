@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -29,6 +30,12 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Picture> pictures;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "products_colors",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "color_id"))
+    private Set<Colors> colors;
 
     public Product() {
     }
@@ -86,5 +93,13 @@ public class Product implements Serializable {
 
     public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
+    }
+
+    public Set<Colors> getColors() {
+        return colors;
+    }
+
+    public void setColors(Set<Colors> colors) {
+        this.colors = colors;
     }
 }

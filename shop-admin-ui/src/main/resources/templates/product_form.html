@@ -51,6 +51,17 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="colors">Colors</label>
+                        <select multiple class="selectpicker" id="colors" title="Chose colors"
+                                th:field="*{colors}" required>
+                            <option th:each="color : ${colors}"
+                                    th:text="${color.name}"
+                                    th:value="${color.id}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="newPictures">Product image</label>
                         <input th:field="*{newPictures}" type="file" class="form-control" id="newPictures"
                                placeholder="Upload new product picture" multiple>

@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.aspect.ExecutionTimer;
 import ru.geekbrains.controller.repr.ProductRepr;
 import ru.geekbrains.persist.model.Picture;
 import ru.geekbrains.persist.model.Product;
@@ -35,6 +36,7 @@ public class ProductServiceImpl implements ProductService, Serializable {
         this.pictureService = pictureService;
     }
 
+    @ExecutionTimer
     @Override
     @Transactional
     public List<ProductRepr> findAll() {
@@ -43,12 +45,14 @@ public class ProductServiceImpl implements ProductService, Serializable {
                 .collect(Collectors.toList());
     }
 
+    @ExecutionTimer
     @Override
     @Transactional
     public Optional<ProductRepr> findById(Long id) {
         return productRepository.findById(id).map(ProductServiceImpl::mapToRepr);
     }
 
+    @ExecutionTimer
     @Override
     public Page<ProductRepr> findByFilter(Long categoryId, Integer page, Integer pageSize) {
         Specification<Product> spec = Specification.where(null); // = ProductSpecification.fetchPictures();
