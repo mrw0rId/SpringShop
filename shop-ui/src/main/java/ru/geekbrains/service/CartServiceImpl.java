@@ -1,6 +1,7 @@
 package ru.geekbrains.service;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -9,6 +10,7 @@ import ru.geekbrains.controller.repr.ProductRepr;
 import ru.geekbrains.service.model.LineItem;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,5 +64,14 @@ public class CartServiceImpl implements CartService, Serializable {
     public List<LineItem> getLineItems() {
         lineItems.forEach(LineItem::setQty);
         return new ArrayList<>(lineItems.keySet());
+    }
+
+    @JsonIgnore
+    @Override
+    public BigDecimal getSubTotal() {
+        lineItems.forEach(LineItem::setQty);
+        return lineItems.keySet().stream()
+                .map(LineItem::getTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

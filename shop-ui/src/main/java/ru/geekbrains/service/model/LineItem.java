@@ -26,6 +26,14 @@ public class LineItem implements Serializable {
         this.size = size;
     }
 
+    public LineItem(ProductRepr productRepr, String color, String size, Integer qty) {
+        this.productId = productRepr.getId();
+        this.productRepr = productRepr;
+        this.color = color;
+        this.size = size;
+        this.qty = qty;
+    }
+
     public LineItem() {
     }
 
