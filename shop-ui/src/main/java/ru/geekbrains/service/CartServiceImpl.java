@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.controller.repr.ProductRepr;
 import ru.geekbrains.service.model.LineItem;
+import ru.geekbrains.service.model.LineItemBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,13 +35,13 @@ public class CartServiceImpl implements CartService, Serializable {
 
     @Override
     public void addProductQty(ProductRepr productRepr, String color, String size, int qty) {
-        LineItem lineItem = new LineItem(productRepr, color, size);
+        LineItem lineItem = new LineItemBuilder(productRepr).color(color).size(size).qty(qty).build();
         lineItems.put(lineItem, lineItems.getOrDefault(lineItem, 0) + qty);
     }
 
     @Override
     public void adjustQty(ProductRepr productRepr, String color, String size, int adjQty) {
-        LineItem lineItem = new LineItem(productRepr, color, size);
+        LineItem lineItem = new LineItemBuilder(productRepr).color(color).size(size).qty(adjQty).build();
         int qty = lineItems.get(lineItem);
         int diff = adjQty - qty;
         if (adjQty == 0) {
@@ -51,7 +51,7 @@ public class CartServiceImpl implements CartService, Serializable {
 
     @Override
     public void removeProductQty(ProductRepr productRepr, String color, String size, int qty) {
-        LineItem lineItem = new LineItem(productRepr, color, size);
+        LineItem lineItem = new LineItemBuilder(productRepr).color(color).size(size).qty(qty).build();
         int currentQty = lineItems.getOrDefault(lineItem, 0);
         if (currentQty - qty > 0) {
             lineItems.put(lineItem, currentQty - qty);
