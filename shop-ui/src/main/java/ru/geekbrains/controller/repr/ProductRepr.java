@@ -33,6 +33,13 @@ public class ProductRepr implements Serializable {
         this.pictureIds = pictureIds;
     }
 
+    public ProductRepr(Long id, String name, BigDecimal price, String brand) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.brand = brand;
+    }
+
     public Long getPictureId() {
         return pictureId;
     }
