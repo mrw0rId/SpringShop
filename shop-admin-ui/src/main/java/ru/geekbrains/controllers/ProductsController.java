@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.geekbrains.controllers.repr.ProductRepr;
-import ru.geekbrains.error.NotFoundException;
-import ru.geekbrains.persist.repo.BrandRepository;
-import ru.geekbrains.persist.repo.CategoryRepository;
-import ru.geekbrains.service.ProductService;
+import ru.geekbrains.service.ProductCategoryBrandFacade;
 
 
 @Controller
@@ -22,68 +19,44 @@ public class ProductsController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductsController.class);
 
-    private final ProductService productService;
-
-    private final CategoryRepository categoryRepository;
-
-    private final BrandRepository brandRepository;
+    private final ProductCategoryBrandFacade facade;
 
     @Autowired
-    public ProductsController(ProductService productService, CategoryRepository categoryRepository,
-                              BrandRepository brandRepository) {
-        this.productService = productService;
-        this.categoryRepository = categoryRepository;
-        this.brandRepository = brandRepository;
+    public ProductsController(ProductCategoryBrandFacade facade) {
+        this.facade = facade;
     }
 
     @GetMapping("/products")
     public String adminProductsPage(Model model) {
-        model.addAttribute("activePage", "Products");
-        model.addAttribute("products", productService.findAll());
+        logger.info("Facade: find AllProducts");
+        facade.findAll(model);
         return "products";
     }
 
     @GetMapping("/product/{id}/edit")
     public String adminEditProduct(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("edit", true);
-        model.addAttribute("activePage", "Products");
-        model.addAttribute("product", productService.findById(id).orElseThrow(NotFoundException::new));
-        model.addAttribute("categories", categoryRepository.findAll());
-        model.addAttribute("brands", brandRepository.findAll());
+        logger.info("Facade: find Product with id:" + id);
+        facade.editProduct(model, id);
         return "product_form";
     }
 
     @DeleteMapping("/product/{id}/delete")
     public String adminDeleteProduct(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("activePage", "Products");
-        productService.deleteById(id);
+        logger.info("Facade: delete Product with id:" + id);
+        facade.deleteProduct(model, id);
         return "redirect:/products";
     }
 
     @GetMapping("/product/create")
     public String adminCreateProduct(Model model) {
-        model.addAttribute("create", true);
-        model.addAttribute("activePage", "Products");
-        model.addAttribute("product", new ProductRepr());
-        model.addAttribute("categories", categoryRepository.findAll());
-        model.addAttribute("brands", brandRepository.findAll());
+        logger.info("Facade: create new Product");
+        facade.createProduct(model);
         return "product_form";
     }
 
     @PostMapping("/product")
-    public String adminUpsertProduct(Model model, RedirectAttributes redirectAttributes, ProductRepr product) {
-        model.addAttribute("activePage", "Products");
-
-        try {
-            productService.save(product);
-        } catch (Exception ex) {
-            logger.error("Problem with creating or updating product", ex);
-            redirectAttributes.addFlashAttribute("error", true);
-            if (product.getId() == null) {
-                return "redirect:/product/create";
-            }
-            return "redirect:/product/" + product.getId() + "/edit";
-        }
-        return "redirect:/products";
+    public String adminInsertProduct(Model model, RedirectAttributes redirectAttributes, ProductRepr product) {
+        logger.info("Facade: save created Product");
+        return facade.insertProduct(model, redirectAttributes, product);
     }
 }
