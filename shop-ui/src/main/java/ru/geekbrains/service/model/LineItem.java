@@ -34,7 +34,9 @@ public class LineItem implements Serializable {
         this.qty = qty;
     }
 
-    public LineItem() {
+    public LineItem(ProductRepr productRepr) {
+        this.productId = productRepr.getId();
+        this.productRepr = productRepr;
     }
 
     public Long getProductId() {

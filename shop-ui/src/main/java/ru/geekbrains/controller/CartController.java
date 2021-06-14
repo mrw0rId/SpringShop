@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.controller.error.NotFoundException;
-import ru.geekbrains.controller.repr.CartItemRepr;
 import ru.geekbrains.controller.repr.ProductRepr;
 import ru.geekbrains.service.CartService;
 import ru.geekbrains.service.ProductService;
